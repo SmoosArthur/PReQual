@@ -5,3 +5,4 @@ Idées de chose à faire :
 - réfléchir à la stratégie de visualisation
 - réfléchir à la stratégie d'analyse
 - système de résilience pour les PR qui échouent à l'extraction
+- outil pour visualiser le dataset (eg: git graph) -> historique
