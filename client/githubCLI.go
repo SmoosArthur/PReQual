@@ -16,7 +16,8 @@ func (c *GhClient) GetPullRequests(repo string) ([]model.PullRequest, error) {
 		"pr", "list",
 		"-R", repo,
 		"--state", "all",
-		"--json", "number,title,baseRefOid,headRefOid",
+		"--limit", "1000",
+		"--json", "number,title,baseRefOid,headRefOid,state,createdAt,closedAt,comments,body,closingIssuesReferences",
 	}
 
 	output, err := c.runGh(args)

@@ -3,6 +3,8 @@ Idées de chose à faire :
 - extraire les résultats dans un fichier csv pour faciliter les analyses statistiques
 - réfléchir à la strategie de stockage
 - réfléchir à la stratégie de visualisation
-- réfléchir à la stratégie d'analyse
+- réfléchir à la stratégie d'analyse (réfléchir aux métriques qu'on veut)
 - système de résilience pour les PR qui échouent à l'extraction
 - outil pour visualiser le dataset (eg: git graph) -> historique
+- try catch quand limite CLI attent
+- savoir si related to issue

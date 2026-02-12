@@ -2,13 +2,14 @@ package main
 
 import (
 	"PReQual/client"
+	"PReQual/helper"
 	"fmt"
 )
 
 const workspace = "tmp"
 
 func main() {
-	repo := "ReViSE-EuroSpaceCenter/ReViSE-backend"
+	repo := "sipeed/picoclaw"
 
 	var prClient client.PullRequestClient
 	prClient = &client.GhClient{}
@@ -30,5 +31,7 @@ func main() {
 		if err = prClient.RetrieveBranchZip(repo, pr.BaseRefOid, path, "base.zip"); err != nil {
 			return
 		}
+
+		helper.WriteMetaDataFile(path, pr)
 	}
 }
