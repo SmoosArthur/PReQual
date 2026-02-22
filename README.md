@@ -1,0 +1,78 @@
+# PReQual - Pull Request Dataset Analyzer
+
+## Installation
+
+### 1 - Sonar CLI Runner
+
+```bash
+# Pulling the docker image
+docker pull  sonarsource/sonar-scanner-cli
+```
+
+The docker container will be launch automatically by the script during the analysis.
+
+### 2 - Setup a Docker network
+
+```bash
+docker network create sonar-net
+```
+
+### 3 - SonarQube
+
+```bash
+# Pulling the docker image
+docker pull sonarqube
+
+# Run the image
+docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 --network=sonar-net sonarqube:latest
+```
+
+Once the image is running, the admin password must be reset by going on Sonar's [main page](http://localhost:9000). 
+The web interface run on `http://localhost:9000`, but it will be different if you run the analysis on a distant server.
+
+### 4 - Setup Token access
+
+Once SonarQube is running, a global access token must be set:
+
+- Got to `My Account` then to `security`
+- Create a new token by selecting `Global Analysis Token`. 
+- Copy the newly created token, and paste it in the .env file of the analyzer root folder (a `.env.example` is available for reference).
+
+## Run the script locally
+
+To run the analyzer script:
+
+```bash
+go run main.go -repo organization/repository
+
+# OR
+
+go run main.go -repo organization/repository -workspace my-workspace
+```
+
+Two arguments can be passed: 
+- `-repo organization/repository`, to precise on which GitHub repository the analysis will be run.
+  - `organization` is the GitHub organization name
+  - `repository` is the GitHub repository name
+- [Option] `-workspace my-workspace`, to precise the workspace folder for the analysis, the default workspace is `./tmp` in the root script folder.
+
+## Run the script on distant server 
+
+### 1 - Build the docker image
+
+```bash
+docker build -t prequal .
+```
+
+### 2 - Run the image
+
+```bash
+docker run --rm --name PReQual --network=sonar-net --env-file .env -v $(pwd)/analysis:/app/workspace prequal -repo organization/repository
+```
+
+Two arguments can be passed:
+- `-repo organization/repository`, to precise on which GitHub repository the analysis will be run.
+    - `organization` is the GitHub organization name
+    - `repository` is the GitHub repository name
+
+For this method, a GitHub CLI token must be provided in the `.env` file.
