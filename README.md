@@ -43,11 +43,7 @@ Once SonarQube is running, a global access token must be set:
 To run the analyzer script:
 
 ```bash
-go run main.go -repo organization/repository
-
-# OR
-
-go run main.go -repo organization/repository -workspace my-workspace
+go run main.go -repo organization/repository 
 ```
 
 Two arguments can be passed: 
@@ -55,8 +51,22 @@ Two arguments can be passed:
   - `organization` is the GitHub organization name
   - `repository` is the GitHub repository name
 - [Option] `-workspace my-workspace`, to precise the workspace folder for the analysis, the default workspace is `./tmp` in the root script folder.
+- [Option] `-metrics flag1,flag2,...`, to precise which SonarQube flags should be included in the analysis, the default is `Cognitive complexity` and `Cyclomatic complexity`. The available flags are listed in the next section, the extended list of flags can be found on SonarQube's official documentation.
 
-## Run the script on distant server 
+
+### Sonar Flags
+
+The SonarQube analysis can be customized by passing flags to the script.
+- Cyclomatic complexity -> `complexity`
+- Cognitive complexity -> `cognitive_complexity`
+- Code smells -> `code_smells`
+- Development cost -> `development_cost`
+- Duplicated lines -> `duplicated_lines`
+- Number of lines of code -> `ncloc`
+- Software quality maintainability rating -> `software_quality_maintainability_rating`
+
+
+## Run the script on distant server (Currently unavailable)
 
 ### 1 - Build the docker image
 

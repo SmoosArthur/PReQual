@@ -12,6 +12,7 @@ import (
 )
 
 const defaultWorkspace = "tmp"
+const defaultMetric = "complexity,cognitive_complexity"
 
 var repos = []string{
 	"ReViSE-EuroSpaceCenter/ReViSE-backend",
@@ -29,6 +30,7 @@ func main() {
 	// CLI flags
 	reposArg := flag.String("repos", "", "GitHub repositories in the form <owner>/<repo>(,<owner>/<repo>)* (required)")
 	workspace := flag.String("workspace", defaultWorkspace, "Workspace directory (default: tmp)")
+	metricsArg := flag.String("metrics", defaultMetric, "Comma-separated list of metrics to analyze (default: complexity,cognitive_complexity)")
 
 	flag.Parse()
 
@@ -39,6 +41,8 @@ func main() {
 	}
 
 	repos := strings.Split(*reposArg, ",")
+
+	metrics := strings.Split(*metricsArg, ",")
 
 	var prClient client.PullRequestClient
 	prClient = &client.GhClient{}
