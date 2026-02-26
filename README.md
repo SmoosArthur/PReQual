@@ -67,7 +67,7 @@ docker build -t prequal .
 ### 2 - Run the image
 
 ```bash
-docker run --rm --name PReQual --network=sonar-net --env-file .env -v $(pwd)/analysis:/app/workspace prequal -repo organization/repository
+docker run --rm --name PReQual --network=sonar-net --env-file .env -v $(pwd)/analysis:/workspace -v /var/run/docker.sock:/var/run/docker.sock prequal -repo organization/repository
 ```
 
 Two arguments can be passed:

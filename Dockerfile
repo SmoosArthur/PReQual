@@ -6,13 +6,14 @@ WORKDIR /app
 ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64
 
 RUN apk add --no-cache \
-    openjdk25 \
+    openjdk21 \
     maven \
     git \
     curl \
     bash \
     ca-certificates \
-    github-cli
+    github-cli \
+    docker-cli
 
 COPY go.mod go.sum ./
 RUN go mod download
@@ -27,13 +28,14 @@ FROM alpine:3.23.3
 WORKDIR /app
 
 RUN apk add --no-cache \
-    openjdk25 \
+    openjdk21 \
     maven \
     git \
     curl \
     bash \
     ca-certificates \
-    github-cli
+    github-cli \
+    docker-cli
 
 RUN apk add --no-cache ca-certificates
 
