@@ -11,7 +11,7 @@ import (
 	"PReQual/metric"
 )
 
-const workspace = "tmp"
+const defaultWorkspace = "tmp"
 
 var repos = []string{
 	"ReViSE-EuroSpaceCenter/ReViSE-backend",
@@ -27,17 +27,18 @@ var repos = []string{
 
 func main() {
 	// CLI flags
-	repo := flag.String("repo", "", "GitHub repository in the form <owner>/<repo> (required)")
+	reposArg := flag.String("repos", "", "GitHub repositories in the form <owner>/<repo>(,<owner>/<repo>)* (required)")
 	workspace := flag.String("workspace", defaultWorkspace, "Workspace directory (default: tmp)")
 
 	flag.Parse()
 
-	// Validate required arguments
-	if *repo == "" {
-		fmt.Println("Error: -repo argument is required")
+	if *reposArg == "" {
+		fmt.Println("Error: -repos argument is required")
 		flag.Usage()
 		os.Exit(1)
 	}
+
+	repos := strings.Split(*reposArg, ",")
 
 	var prClient client.PullRequestClient
 	prClient = &client.GhClient{}
@@ -57,7 +58,7 @@ func main() {
 		for _, pr := range prs {
 			fmt.Printf("PR #%d: %s (Base: %s, Head: %s)\n", pr.Number, pr.Title, pr.BaseRefOid, pr.HeadRefOid)
 
-			var path = fmt.Sprintf("%s/%s/pr_%d", workspace, repo, pr.Number)
+			var path = fmt.Sprintf("%s/%s/pr_%d", *workspace, repo, pr.Number)
 
 			if err := prClient.RetrieveBranchZip(repo, pr.HeadRefOid, path, "head.zip"); err != nil {
 				return
