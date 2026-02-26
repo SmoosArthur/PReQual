@@ -69,7 +69,7 @@ func runSonarScanner(path string) error {
 
 	cmd := exec.Command(
 		"docker", "run", "--rm",
-		"--network", "sonar",
+		"--network", "sonar-net",
 		"-v", absPath+":/usr/src",
 		"-e", "SONAR_TOKEN="+os.Getenv("SONAR_TOKEN"),
 		"sonarsource/sonar-scanner-cli",
