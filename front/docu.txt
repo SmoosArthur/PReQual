@@ -1,0 +1,2 @@
+Utiliser streamlit (https://docs.streamlit.io/)
+Essayer de partir de gitgraph
